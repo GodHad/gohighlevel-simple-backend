@@ -1,12 +1,14 @@
+const express = require('express');
+const app = express();
+const axios = require('axios');
 const API_KEY = process.env.API_KEY;
 
-module.exports = async (req, res) => {
-
+app.get('/api/contacts', async (req, res) => {
     try {
         const { customFieldValue } = req.query;
         const response = await axios.get('https://rest.gohighlevel.com/v1/contacts', {
             headers: {
-                Authorization: `Bearer ${API_KEY}`, // Add the Bearer token
+                Authorization: `Bearer ${API_KEY}`, 
             },
         });
     
@@ -18,4 +20,6 @@ module.exports = async (req, res) => {
         console.error('Error fetching contacts:', error);
         res.status(500).send('Failed to fetch contacts');
     }
-}
+});
+
+module.exports = app;
